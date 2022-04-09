@@ -120,6 +120,8 @@ describe('Home page', () => {
       ],
     });
 
+    console.log(wrapper);
+
     render(<Home />, { wrapper });
 
     expect(await screen.findByText('The best doge')).toBeInTheDocument();
