@@ -8,27 +8,7 @@ import { api } from '../services/api';
 import { Loading } from '../components/Loading';
 import { Error } from '../components/Error';
 
-interface Card {
-  id: string;
-  description: string;
-  title: string;
-  ts: number;
-  url: string;
-}
-interface RequestProps {
-  data: Card[];
-  after: string;
-}
-
 export default function Home(): JSX.Element {
-  const fetchImages = async ({ pageParam = null }): Promise<RequestProps> => {
-    const response = await api.get('api/images', {
-      params: { after: pageParam },
-    });
-
-    return response.data;
-  };
-
   const {
     data,
     isLoading,
@@ -36,9 +16,19 @@ export default function Home(): JSX.Element {
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery('images', fetchImages, {
-    getNextPageParam: lastPage => lastPage.after ?? false,
-  });
+  } = useInfiniteQuery(
+    'images',
+    async ({ pageParam = null }) => {
+      const response = await api.get('api/images', {
+        params: { after: pageParam },
+      });
+
+      return response.data;
+    },
+    {
+      getNextPageParam: lastPage => lastPage.after ?? false,
+    }
+  );
 
   const formattedData = useMemo(() => {
     return data?.pages.map(cards => cards.data).flat();

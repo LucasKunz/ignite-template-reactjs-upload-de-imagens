@@ -64,7 +64,6 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
         url: imageUrl,
       };
       const response = await api.post('api/images', newData);
-      console.log('response', response);
 
       return response.data;
     },

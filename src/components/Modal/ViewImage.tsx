@@ -27,7 +27,7 @@ export function ModalViewImage({
           <Image src={imgUrl} alt="Cards" />
         </ModalBody>
         <ModalFooter>
-          <Link href={imgUrl}>Abrir originial</Link>
+          <Link href={imgUrl}>Abrir original</Link>
         </ModalFooter>
       </ModalContent>
     </Modal>
